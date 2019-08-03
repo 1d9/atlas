@@ -36,3 +36,9 @@ resource "aws_elastic_beanstalk_application_version" "v1" {
   bucket      = "${aws_s3_bucket.beanstalk-bucket.id}"
   key         = "${aws_s3_bucket_object.application-object.id}"
 }
+
+resource "aws_elastic_beanstalk_environment" "cartographer-production" {
+  name                = "production"
+  application         = "${aws_elastic_beanstalk_application.cartographer-app.name}"
+  version_label = "${aws_elastic_beanstalk_application_version.v1.name}"
+}
