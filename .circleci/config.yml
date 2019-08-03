@@ -18,4 +18,3 @@ workflows:
   master_commit:
     jobs:
       - plan:
-          type: approval
