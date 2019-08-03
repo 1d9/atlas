@@ -79,6 +79,8 @@ workflows:
           requires:
             - build
       - execute:
+          requires:
+            - plan
           filters:
             branches:
               only:
