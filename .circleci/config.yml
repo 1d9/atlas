@@ -78,10 +78,13 @@ workflows:
       - plan:
           requires:
             - build
-      - hold:
           requires:
             - plan
           type: approval
       - execute:
+          filters:
+            branch:
+              only:
+                - master
           requires:
             - hold
