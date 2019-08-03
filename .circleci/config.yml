@@ -38,12 +38,12 @@ jobs:
           command: terraform init
       - run:
           name: Create Plan
-          command: terraform plan -out "/tmp/workspace/atlas.tfplan"
+          command: terraform plan -out "~/workspace/atlas.tfplan"
       - store_artifacts:
-          path: /tmp/workspace/atlas.tfplan
+          path: ~/workspace/atlas.tfplan
           destination: atlas.tfplan
       - persist_to_workspace:
-          root: /tmp/workspace
+          root: ~/workspace
           paths:
             - atlas.tfplan
   execute:
@@ -57,18 +57,21 @@ jobs:
           command: |
             echo "credentials \"app.terraform.io\" { token = \"$TF_TOKEN\" }" > ~/.terraformrc
       - attach_workspace:
-          at: /tmp/workspace
+          at: ~/workspace
       - run:
           name: Init Terraform providers
           command: terraform init
       - run:
           name: Execute Plan
-          command: terraform apply "/tmp/workspace/atlas.tfplan"
+          command: terraform apply "~/workspace/atlas.tfplan"
 workflows:
   version: 2
   master_commit:
     jobs:
-      - plan
+      - build:
+      - plan:
+          requires:
+            - build
       - hold:
           requires:
             - plan
