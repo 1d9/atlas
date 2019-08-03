@@ -15,7 +15,7 @@ jobs:
           name: Build application packages
           command: make all
       - run:
-          name: copy artefacts to workspace
+          name: Copy artefacts to workspace
           command: cp -r ./artefacts ~/workspace
       - persist_to_workspace:
           root: ~/workspace
@@ -58,6 +58,9 @@ jobs:
             echo "credentials \"app.terraform.io\" { token = \"$TF_TOKEN\" }" > ~/.terraformrc
       - attach_workspace:
           at: ~/workspace
+      - run:
+          name: Copy workspace artefacts to working directory
+          command: cp -r ~/workspace/artefacts ./artefacts
       - run:
           name: Init Terraform providers
           command: terraform init
