@@ -13,9 +13,9 @@ jobs:
           command: |
             echo "credentials \"app.terraform.io\" { token = \"$TF_TOKEN\" }" > ~/.terraformrc
       - run: terraform init
-      - run: terraform plan -out "tmp/atlas.tfplan"
+      - run: terraform plan -out "/tmp/atlas.tfplan"
       - store_artifacts:
-          path: tmp/atlas.tfplan
+          path: /tmp/atlas.tfplan
           destination: atlas.tfplan
 workflows:
   version: 2
