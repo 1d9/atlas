@@ -31,7 +31,7 @@ resource "aws_elastic_beanstalk_application" "cartographer-app" {
 
 resource "aws_elastic_beanstalk_application_version" "v1" {
   name        = "v1"
-  application = "1d9-cartographer"
+  application = "${aws_elastic_beanstalk_application.cartographer-app.id}"
   description = "application version created by terraform"
   bucket      = "${aws_s3_bucket.beanstalk-bucket.id}"
   key         = "${aws_s3_bucket_object.application-object.id}"
