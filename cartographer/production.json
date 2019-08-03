@@ -1,0 +1,10 @@
+{
+  "name": "1d9 - Atlas",
+  "port": 80,
+  "logging": "stdout",
+  "storage": {
+    "type": "s3-json",
+    "bucketName": "atlas-cartographer-data",
+    "creds": { "region": "ap-southeast-2", "accessKeyId": "", "secretAccessKey": "" }
+  }
+}

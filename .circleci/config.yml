@@ -2,15 +2,33 @@
 # Check https://circleci.com/docs/2.0/language-javascript/ for more details
 version: 2
 jobs:
+  build:
+    working_directory: ~/repo
+    docker:
+      - image: circleci/buildpack-deps:disco
+    steps:
+      - checkout
+      - run:
+          name: Creating workspace directory
+          command: mkdir -p ~/workspace
+      - run:
+          name: Build application packages
+          command: make all
+      - run:
+          name: copy artefacts to workspace
+          command: cp ./artefacts ~/workspace
+      - persist_to_workspace:
+          root: ~/workspace
+          paths:
+            - artefacts/*
   plan:
     working_directory: ~/repo
     docker:
       - image: hashicorp/terraform:0.12.6
     steps:
       - checkout
-      - run:
-          name: Creating workspace directory
-          command: mkdir -p /tmp/workspace
+      - attach_workspace:
+          at: ~/workspace
       - run:
           name: Create Terraform RC with Token
           command: |

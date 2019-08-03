@@ -1,0 +1,16 @@
+{
+  "AWSEBDockerrunVersion": "1",
+  "Image": "astralatlas/cartographer:1.2.0",
+  "Ports": [
+    {
+      "ContainerPort": 80
+    }
+  ],
+  "Command": "-config-env CONFIG_FILE",
+  "Volumes": [
+    {
+      "HostDirectory": "/var/app/current/",
+      "ContainerDirectory": "/opt/cartographer/"
+    }
+  ]
+}
