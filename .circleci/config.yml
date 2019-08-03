@@ -1,0 +1,20 @@
+# Javascript Node CircleCI 2.0 configuration file
+# Check https://circleci.com/docs/2.0/language-javascript/ for more details
+version: 2
+jobs:
+  plan:
+    working_directory: ~/repo
+    docker:
+      - image: hashicorp/terraform:0.12.6
+    steps:
+      - checkout
+      - run: terraform plan -out "tmp/atlas.tfplan"
+      - store_artifacts:
+          path: tmp/atlas.tfplan
+          destination: atlas.tfplan
+workflows:
+  version: 2
+  master_commit:
+    jobs:
+      - plan:
+          type: approval
