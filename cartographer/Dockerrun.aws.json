@@ -1,6 +1,8 @@
 {
   "AWSEBDockerrunVersion": "1",
-  "Image": "astralatlas/cartographer:1.2.0",
+  "Image": {
+    "name": "astralatlas/cartographer:1.2.0",
+  },
   "Ports": [
     {
       "ContainerPort": 80
