@@ -8,6 +8,7 @@ jobs:
       - image: hashicorp/terraform:0.12.6
     steps:
       - checkout
+      - run: terraform init
       - run: terraform plan -out "tmp/atlas.tfplan"
       - store_artifacts:
           path: tmp/atlas.tfplan
