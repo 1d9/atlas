@@ -68,7 +68,7 @@ workflows:
   version: 2
   master_commit:
     jobs:
-      - build:
+      - build
       - plan:
           requires:
             - build
