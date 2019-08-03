@@ -80,7 +80,7 @@ workflows:
             - build
       - execute:
           filters:
-            branch:
+            branches:
               only:
                 - master
           requires:
