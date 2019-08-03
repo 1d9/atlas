@@ -16,7 +16,7 @@ jobs:
           command: make all
       - run:
           name: copy artefacts to workspace
-          command: cp ./artefacts ~/workspace
+          command: cp -r ./artefacts ~/workspace
       - persist_to_workspace:
           root: ~/workspace
           paths:
