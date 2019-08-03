@@ -8,17 +8,50 @@ jobs:
       - image: hashicorp/terraform:0.12.6
     steps:
       - checkout
+      - persist_to_workspace:
+          root: /tmp/workspace
+          paths:
+            - atlas.tfplan
       - run:
           name: Create Terraform RC with Token
           command: |
             echo "credentials \"app.terraform.io\" { token = \"$TF_TOKEN\" }" > ~/.terraformrc
-      - run: terraform init
-      - run: terraform plan -out "/tmp/atlas.tfplan"
+      - run:
+          name: Init Terraform providers
+          command: terraform init
+      - run:
+          name: Create Plan
+          command: terraform plan -out "/tmp/workspace/atlas.tfplan"
       - store_artifacts:
-          path: /tmp/atlas.tfplan
+          path: /tmp/workspace/atlas.tfplan
           destination: atlas.tfplan
+  execute:
+    working_directory: ~/repo
+    docker:
+      - image: hashicorp/terraform:0.12.6
+    steps:
+      - checkout
+      - run:
+          name: Create Terraform RC with Token
+          command: |
+            echo "credentials \"app.terraform.io\" { token = \"$TF_TOKEN\" }" > ~/.terraformrc
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          name: Init Terraform providers
+          command: terraform init
+      - run:
+          name: Execute Plan
+          command: terraform apply "/tmp/workspace/atlas.tfplan"
 workflows:
   version: 2
   master_commit:
     jobs:
       - plan
+      - hold:
+          requires:
+            - plan
+          type: approval
+      - execute
+          requires:
+            - hold
