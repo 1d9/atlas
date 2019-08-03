@@ -83,5 +83,3 @@ workflows:
             branches:
               only:
                 - master
-          requires:
-            - hold
