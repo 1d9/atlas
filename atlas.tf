@@ -41,4 +41,5 @@ resource "aws_elastic_beanstalk_environment" "cartographer-production" {
   name                = "production"
   application         = "${aws_elastic_beanstalk_application.cartographer-app.name}"
   version_label = "${aws_elastic_beanstalk_application_version.v1.name}"
+  solution_stack_name = "64bit Amazon Linux 2018.03 v4.9.2 running Node.js"
 }
