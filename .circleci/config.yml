@@ -30,9 +30,6 @@ jobs:
       - attach_workspace:
           at: ~/workspace
       - run:
-          name: Creating workspace directory
-          command: mkdir -p ~/workspace
-      - run:
           name: Create Terraform RC with Token
           command: |
             echo "credentials \"app.terraform.io\" { token = \"$TF_TOKEN\" }" > ~/.terraformrc
@@ -66,7 +63,7 @@ jobs:
           command: terraform init
       - run:
           name: Execute Plan
-          command: terraform apply "~/workspace/atlas.tfplan"
+          command: terraform apply ~/workspace/atlas.tfplan
 workflows:
   version: 2
   master_commit:
