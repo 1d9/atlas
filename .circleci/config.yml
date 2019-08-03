@@ -30,6 +30,9 @@ jobs:
       - attach_workspace:
           at: ~/workspace
       - run:
+          name: Copy workspace artefacts to working directory
+          command: cp -r ~/workspace/artefacts ./artefacts
+      - run:
           name: Create Terraform RC with Token
           command: |
             echo "credentials \"app.terraform.io\" { token = \"$TF_TOKEN\" }" > ~/.terraformrc
