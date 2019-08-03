@@ -22,6 +22,8 @@ resource "aws_s3_bucket_object" "application-object" {
   bucket = "${aws_s3_bucket.beanstalk-bucket.id}"
   key    = "applications/v1.zip"
   source = "artefacts/cartographer.zip"
+
+  etag = "${filemd5("artefacts/cartographer.zip")}"
 }
 
 resource "aws_elastic_beanstalk_application" "cartographer-app" {
