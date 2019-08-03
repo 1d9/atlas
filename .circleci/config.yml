@@ -52,6 +52,6 @@ workflows:
           requires:
             - plan
           type: approval
-      - execute
+      - execute:
           requires:
             - hold
