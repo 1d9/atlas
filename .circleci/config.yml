@@ -11,10 +11,6 @@ jobs:
       - run:
           name: Creating workspace directory
           command: mkdir -p /tmp/workspace
-      - persist_to_workspace:
-          root: /tmp/workspace
-          paths:
-            - atlas.tfplan
       - run:
           name: Create Terraform RC with Token
           command: |
@@ -28,6 +24,10 @@ jobs:
       - store_artifacts:
           path: /tmp/workspace/atlas.tfplan
           destination: atlas.tfplan
+      - persist_to_workspace:
+          root: /tmp/workspace
+          paths:
+            - atlas.tfplan
   execute:
     working_directory: ~/repo
     docker:
