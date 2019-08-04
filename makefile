@@ -1,9 +1,12 @@
-all: artefacts/cartographer.zip
+all: artefacts/cartographer.v1.zip artefacts/cartographer.v2.zip
 
 artefacts:
 	mkdir -p artefacts
 
-artefacts/cartographer.zip: artefacts $(wildcard cartographer/*.json)
-	(cd cartographer; zip ../artefacts/cartographer.zip ./*)
+artefacts/cartographer.v1.zip: artefacts $(wildcard cartographer/v1/*.json)
+	(cd cartographer/v1/; zip ../../artefacts/cartographer.v1.zip ./*)
+
+artefacts/cartographer.v2.zip: artefacts $(wildcard cartographer/v2/*.json)
+	(cd cartographer/v2/; zip ../../artefacts/cartographer.v2.zip ./*)
 
 .PHONY: all
