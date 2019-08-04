@@ -65,4 +65,11 @@ resource "aws_elastic_beanstalk_environment" "cartographer-production" {
     name      = "CARTOGRAPHER_CONFIG_PATH"
     value     = "/opt/cartographer/production.json"
   }
+
+  setting {
+    namespace = "aws:autoscaling:launchconfiguration"
+    name      = "IamInstanceProfile"
+    # Hardcoded value
+    value     = "arn:aws:iam::420148351138:instance-profile/AstralAtlasEC2Role"
+  }
 }
