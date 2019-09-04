@@ -3,10 +3,11 @@
 version: 2
 jobs:
   build:
-    working_directory: /opt/terra-astra/config
     docker:
       - image: astralatlas/terra-astra:latest
     steps:
+      - checkout:
+          path: /opt/terra-astra/config
       - run:
           working_directory: /opt/terra-astra/src
           name: Activate Terra-Astra
