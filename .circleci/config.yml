@@ -8,5 +8,6 @@ jobs:
       - image: astralatlas/terra-astra:latest
     steps:
       - run:
+          working_directory: /opt/terra-astra/src
           name: Activate Terra-Astra
           command: /opt/terra-astra/src/cli.sh /opt/terra-astra/config
