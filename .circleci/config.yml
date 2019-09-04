@@ -2,59 +2,11 @@
 # Check https://circleci.com/docs/2.0/language-javascript/ for more details
 version: 2
 jobs:
-  plan:
-    working_directory: ~/repo
+  build:
+    working_directory: /opt/terra-astra/config
     docker:
-      - image: hashicorp/terraform:0.12.6
+      - image: astralatlas/terra-astra:latest
     steps:
-      - checkout
       - run:
-          name: Creating workspace directory
-          command: mkdir -p ~/workspace
-      - run:
-          name: Create Terraform RC with Token
-          command: |
-            echo "credentials \"app.terraform.io\" { token = \"$TF_TOKEN\" }" > ~/.terraformrc
-      - run:
-          name: Init Terraform providers
-          command: terraform init
-      - run:
-          name: Create Plan
-          command: terraform plan -out ~/workspace/atlas.tfplan
-      - store_artifacts:
-          path: ~/workspace/atlas.tfplan
-          destination: atlas.tfplan
-      - persist_to_workspace:
-          root: ~/workspace
-          paths:
-            - atlas.tfplan
-  execute:
-    working_directory: ~/repo
-    docker:
-      - image: hashicorp/terraform:0.12.6
-    steps:
-      - checkout
-      - run:
-          name: Create Terraform RC with Token
-          command: |
-            echo "credentials \"app.terraform.io\" { token = \"$TF_TOKEN\" }" > ~/.terraformrc
-      - attach_workspace:
-          at: ~/workspace
-      - run:
-          name: Init Terraform providers
-          command: terraform init
-      - run:
-          name: Execute Plan
-          command: terraform apply ~/workspace/atlas.tfplan
-workflows:
-  version: 2
-  master_commit:
-    jobs:
-      - plan
-      - execute:
-          requires:
-            - plan
-          filters:
-            branches:
-              only:
-                - master
+          name: Activate Terra-Astra
+          command: /opt/terra-astra/src/cli.sh /opt/terra-astra/config
