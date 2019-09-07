@@ -4,11 +4,16 @@ version: 2
 jobs:
   build:
     docker:
-      - image: astralatlas/terra-astra:latest
+      - image: 1d9tech/builder:latest
     steps:
       - checkout:
-          path: /opt/terra-astra/config
+          path: ~/project
       - run:
-          working_directory: /opt/terra-astra/src
-          name: Activate Terra-Astra
-          command: /opt/terra-astra/src/cli.sh /opt/terra-astra/config
+          name: Plan Infra changes
+          command: terraform plan -out tome-of-worlds.tfplan
+      - store_artifacts:
+          path: tome-of-worlds.tfplan
+      - run:
+          name: Apply planned changes
+          command: terraform apply tome-of-worlds.tfplan
+      
