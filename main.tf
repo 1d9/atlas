@@ -55,6 +55,12 @@ resource "aws_elastic_beanstalk_environment" "prod" {
     name      = "IamInstanceProfile"
     value     = "aws-elasticbeanstalk-ec2-role"
   }
+
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "CONFIG_PATH"
+    value     = "prod.cartographer.json"
+  }
 }
 
 output "production-host" {
