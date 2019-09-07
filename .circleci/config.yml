@@ -3,6 +3,7 @@
 version: 2
 jobs:
   build:
+    shell: /bin/sh -elo pipefail
     docker:
       - image: 1d9tech/builder:latest
     steps:
