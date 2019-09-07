@@ -14,8 +14,8 @@ const buildPackage = async () => {
   
     await new Promise((resolve, reject) => mkdir('package', { recursive: true } , (err) => err ? reject(err) : resolve()));
   
-    await buildDockerrun('package/Dockerrun.aws.json', tag, port, 'CONFIG_PATH');
-    await buildCartographerConfig('package/prod.cartographer.json', port, { dir: 'local' }, authentication);
+    await buildDockerrun('package/Dockerrun.aws.json', tag, parseInt(port, 10), 'CONFIG_PATH');
+    await buildCartographerConfig('package/prod.cartographer.json', parseInt(port, 10), { dir: 'local' }, authentication);
     const packageName = await buildZip('package');
     const packageHash = await buildHash(packageName);
     const hashedPackageName = await new Promise((resolve, reject) => {

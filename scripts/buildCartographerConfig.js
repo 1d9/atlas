@@ -17,7 +17,7 @@ const buildCartographerConfig = async (
       type: 'fixed',
       name: authentication,
       pass: '1234',
-      userId: 0,
+      userId: '0',
     },
   };
 
