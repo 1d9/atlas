@@ -27,7 +27,7 @@ resource "aws-uncontrolled_elastic_beanstalk_application_version" "current-versi
 }
 
 resource "aws_elastic_beanstalk_environment" "prod" {
-  name                = "Production (Tome of Worlds - Cartographer)"
+  name                = "tow-production"
   version_label       = "${aws-uncontrolled_elastic_beanstalk_application_version.current-version.application_version_label}"
   application         = "${aws_elastic_beanstalk_application.cartographer.name}"
 
