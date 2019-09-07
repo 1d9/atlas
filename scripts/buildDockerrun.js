@@ -10,6 +10,7 @@ const buildDockerrun = async (filename/*: string*/, tag/*: string*/, port/*: num
     },
     "Ports": [
       {
+        "HostPort": 80,
         "ContainerPort": port
       }
     ],

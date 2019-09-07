@@ -10,12 +10,12 @@ const { buildHash } = require('./buildHash');
 
 const buildPackage = async () => {
   try {
-    const { tag, port, authentication } = JSON.parse(await readStream(process.stdin));
+    const { tag, authentication } = JSON.parse(await readStream(process.stdin));
   
     await new Promise((resolve, reject) => mkdir('package', { recursive: true } , (err) => err ? reject(err) : resolve()));
   
-    await buildDockerrun('package/Dockerrun.aws.json', tag, parseInt(port, 10), 'CONFIG_PATH');
-    await buildCartographerConfig('package/prod.cartographer.json', parseInt(port, 10), { dir: 'local' }, authentication);
+    await buildDockerrun('package/Dockerrun.aws.json', tag, 8080, 'CONFIG_PATH');
+    await buildCartographerConfig('package/prod.cartographer.json', 8080, { dir: 'local' }, authentication);
     const packageName = await buildZip('package');
     const packageHash = await buildHash(packageName);
     const hashedPackageName = await new Promise((resolve, reject) => {
