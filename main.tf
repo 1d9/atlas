@@ -58,8 +58,8 @@ resource "aws_elastic_beanstalk_environment" "prod" {
 
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
-    name      = "CONFIG_PATH"
-    value     = "prod.cartographer.json"
+    name      = "CARTOGRAPHER_CONFIG_PATH"
+    value     = "/opt/cartographer/prod.cartographer.json"
   }
 }
 
