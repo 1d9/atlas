@@ -10,6 +10,10 @@ jobs:
       - checkout:
           path: ~/project
       - run:
+        name: Create Terraform RC with Token
+        command: |
+          echo "credentials \"app.terraform.io\" { token = \"$TF_TOKEN\" }" > ~/.terraformrc
+      - run:
           name: Install plugins
           command: terraform init
       - run:
