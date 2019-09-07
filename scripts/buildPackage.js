@@ -17,9 +17,10 @@ const buildPackage = async () => {
     await buildDockerrun('package/Dockerrun.aws.json', tag, port, 'CONFIG_PATH');
     await buildCartographerConfig('package/prod.cartographer.json', port, { dir: 'local' }, authentication);
     const packageName = await buildZip('package');
-    const packageHash = tag + '-' + (await buildHash(packageName)).slice(0, 8);
+    const packageHash = await buildHash(packageName);
     const hashedPackageName = await new Promise((resolve, reject) => {
-      copyFile(packageName, `${packageHash}.tar`, 0, (err) => err ? reject(err) : resolve(`${packageHash}.tar`));
+      const filename = `${tag}-${packageHash.slice(0, 8)}.zip`;
+      copyFile(packageName, filename, 0, (err) => err ? reject(err) : resolve(filename));
     });
     process.stdout.write(JSON.stringify({
       filename: hashedPackageName,

@@ -2,11 +2,12 @@
 const { exec } = require('child_process');
 
 const buildZip = async (dirName/*: string*/) => {
-  const command = `cd ${dirName} && tar c -m -f ${dirName}.tar ./*`;
+  const zipName = `${dirName}.zip`;
+  const command = `find ${dirName} -exec touch -t 201401010000 {} + && cd ${dirName} && zip -X ../${zipName} ./*`;
   return new Promise((resolve, reject) => {
     const zipProcess = exec(command, (error, stdout, stderr) => {
       if (!error) {
-        resolve(`${dirName}/${dirName}.tar`);
+        resolve(zipName);
       } else {
         reject(error);
       }
