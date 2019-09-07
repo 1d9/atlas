@@ -14,12 +14,12 @@ const buildPackage = async () => {
   
     await new Promise((resolve, reject) => mkdir('package', { recursive: true } , (err) => err ? reject(err) : resolve()));
   
-    await buildDockerrun('package/Dockerrun.aws.jon', tag, port, 'CONFIG_PATH');
+    await buildDockerrun('package/Dockerrun.aws.json', tag, port, 'CONFIG_PATH');
     await buildCartographerConfig('package/prod.cartographer.json', port, { dir: 'local' }, authentication);
     const packageName = await buildZip('package');
     const packageHash = tag + '-' + (await buildHash(packageName)).slice(0, 8);
     const hashedPackageName = await new Promise((resolve, reject) => {
-      copyFile(packageName, `${packageHash}.tar`, 0, (err) => err ? reject(err) : resolve(`${packageHash}.zip`));
+      copyFile(packageName, `${packageHash}.tar`, 0, (err) => err ? reject(err) : resolve(`${packageHash}.tar`));
     });
     process.stdout.write(JSON.stringify({
       filename: hashedPackageName,
