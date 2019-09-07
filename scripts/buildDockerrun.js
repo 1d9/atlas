@@ -13,7 +13,6 @@ const buildDockerrun = async (filename/*: string*/, tag/*: string*/, port/*: num
         "ContainerPort": port
       }
     ],
-    "Command": `-config-env ${configEnv}`,
     "Volumes": [
       {
         "HostDirectory": "/var/app/current/",
