@@ -5,7 +5,9 @@ const { readStream } = require('./utils');
 const buildDockerrun = async (filename/*: string*/, tag/*: string*/, port/*: number*/, configEnv/*: string*/) => {
   const dockerrun = {
     "AWSEBDockerrunVersion": "1",
-    "Image": `astralatlas/cartographer:${tag}`,
+    "Image": {
+      "Name": `astralatlas/cartographer:${tag}`,
+    },
     "Ports": [
       {
         "ContainerPort": port
@@ -20,7 +22,7 @@ const buildDockerrun = async (filename/*: string*/, tag/*: string*/, port/*: num
     ]
   };
 
-  const dockerrunString = JSON.stringify(dockerrun);
+  const dockerrunString = JSON.stringify(dockerrun, null, 3);
   return new Promise((resolve, reject) => {
     writeFile(filename, dockerrunString, 'utf8', (err) => {
       if (err) {

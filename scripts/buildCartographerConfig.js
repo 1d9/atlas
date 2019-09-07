@@ -21,7 +21,7 @@ const buildCartographerConfig = async (
     },
   };
 
-  const cartographerConfigString = JSON.stringify(cartographerConfig);
+  const cartographerConfigString = JSON.stringify(cartographerConfig, null, 3);
   return new Promise((resolve, reject) => {
     writeFile(filename, cartographerConfigString, 'utf8', (err) => {
       if (err) {
