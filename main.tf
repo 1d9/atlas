@@ -30,6 +30,7 @@ resource "aws_elastic_beanstalk_environment" "prod" {
   name                = "tow-production"
   version_label       = "${aws-uncontrolled_elastic_beanstalk_application_version.current-version.application_version_label}"
   application         = "${aws_elastic_beanstalk_application.cartographer.name}"
+  solution_stack_name = "64bit Amazon Linux 2018.03 v4.10.1 running Node.js"
 
   setting {
     namespace = "aws:autoscaling:updatepolicy:rollingupdate"
