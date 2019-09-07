@@ -14,7 +14,7 @@ jobs:
           command: echo "credentials \"app.terraform.io\" { token = \"$TF_TOKEN\" }" > ~/.terraformrc
       - run:
           name: Copy Plugin to Local
-          command: cp ~/.terraform.d/plugins/terraform-provider-aws-uncontrolled ~/project
+          command: cp ~/.terraform.d/plugins/terraform-provider-aws-uncontrolled .
       - run:
           name: Install plugins
           command: terraform init
