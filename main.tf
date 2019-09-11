@@ -62,13 +62,13 @@ resource "aws_elastic_beanstalk_environment" "prod" {
   }
 }
 
-data "aws_route53_zone" "1d9-zone" {
+data "aws_route53_zone" "primary-1d9-zone" {
   name         = "1d9.tech."
 }
 
-resource "aws_route53_record" "www" {
-  zone_id = "${data.aws_route53_zone.1d9-zone.zone_id}"
-  name    = "api.tome.${data.aws_route53_zone.1d9-zone.name}"
+resource "aws_route53_record" "api-record" {
+  zone_id = "${data.aws_route53_zone.primary-1d9-zone.zone_id}"
+  name    = "api.tome.${data.aws_route53_zone.primary-1d9-zone.name}"
   type    = "CNAME"
   ttl     = "300"
   records = ["${aws_elastic_beanstalk_environment.prod.cname}"]
