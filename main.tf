@@ -3,7 +3,7 @@ data "external" "package" {
   query = {
     tag = "v2.4.1",
     authentication = "luke"
-    origins = ["http://localhost:5000"]
+    origins = "[\"http://localhost:5000\"]"
   }
 }
 
