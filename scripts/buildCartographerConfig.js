@@ -6,6 +6,7 @@ const buildCartographerConfig = async (
   port/*: number*/,
   storage/*: { dir: string } */,
   authentication/*: string */,
+  origins/*: Array<string> */,
 ) => {
   const cartographerConfig = {
     port,
@@ -13,6 +14,7 @@ const buildCartographerConfig = async (
       type: 'local-json',
       dir: storage.dir,
     },
+    cors: { origins },
     authentication: {
       type: 'fixed',
       name: authentication,
@@ -38,7 +40,7 @@ if (require.main === module) {
   const port = parseInt(process.argv[3], 10);
   const storage = { dir: process.argv[4], };
   const authentication = process.argv[5];
-  buildCartographerConfig(filename, port, storage, authentication);
+  buildCartographerConfig(filename, port, storage, authentication, []);
 }
 
 module.exports = {
