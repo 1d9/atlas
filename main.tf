@@ -1,7 +1,7 @@
 data "external" "package" {
   program = ["node", "scripts/buildPackage.js"]
   query = {
-    tag = "v2.4.1",
+    tag = "v2.5.0",
     authentication = "luke"
     origins = "[\"http://localhost:5000\"]"
   }
