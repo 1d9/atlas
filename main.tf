@@ -76,7 +76,7 @@ resource "aws_route53_record" "api-record" {
 }
 
 module "expedition" {
-  source = "github.com/astral-atlas/expedition?ref=v0.5.1"
+  source = "github.com/astral-atlas/expedition?ref=v0.6.0"
 
   website_domain = "expedition.tome.1d9.tech"
 }
