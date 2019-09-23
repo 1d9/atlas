@@ -3,7 +3,7 @@ data "external" "package" {
   query = {
     tag = "v2.5.0",
     authentication = "luke"
-    origins = "[\"http://localhost:5000\"]"
+    origins = "[\"http://localhost:5000\", \"http://expedition.tome.1d9.tech\"]"
   }
 }
 
@@ -73,6 +73,20 @@ resource "aws_route53_record" "api-record" {
   type    = "CNAME"
   ttl     = "300"
   records = ["${aws_elastic_beanstalk_environment.prod.cname}"]
+}
+
+module "expedition" {
+  source = "github.com/astral-atlas/expedition?ref=v0.5.1"
+
+  website_domain = "expedition.tome.1d9.tech"
+}
+
+resource "aws_route53_record" "expedition-record" {
+  zone_id = "${data.aws_route53_zone.primary-1d9-zone.zone_id}"
+  name    = "expedition.tome.${data.aws_route53_zone.primary-1d9-zone.name}"
+  type    = "CNAME"
+  ttl     = "300"
+  records = ["${module.expedition.website_endpoint}"]
 }
 
 output "production-host" {
