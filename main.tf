@@ -75,20 +75,6 @@ resource "aws_route53_record" "api-record" {
   records = ["${aws_elastic_beanstalk_environment.prod.cname}"]
 }
 
-module "expedition" {
-  source = "github.com/astral-atlas/expedition?ref=v0.6.0"
-
-  website_domain = "expedition.tome.1d9.tech"
-}
-
-resource "aws_route53_record" "expedition-record" {
-  zone_id = "${data.aws_route53_zone.primary-1d9-zone.zone_id}"
-  name    = "expedition.tome.${data.aws_route53_zone.primary-1d9-zone.name}"
-  type    = "CNAME"
-  ttl     = "300"
-  records = ["${module.expedition.website_endpoint}"]
-}
-
 output "production-host" {
   value = "${aws_elastic_beanstalk_environment.prod.cname}"
 }
