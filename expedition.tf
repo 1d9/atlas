@@ -3,7 +3,7 @@ data "external" "getGithubRelease" {
 
   query = {
     repo = "astral-atlas/expedition",
-    release = "v0.8.0"
+    release = "v0.9.0"
     file = "expedition.zip"
   }
 }
