@@ -1,5 +1,5 @@
 data "external" "getGithubRelease" {
-  program = ["sh", "${path.module}/scripts/getGithubRelease.sh"]
+  program = ["sh", "./${path.module}/scripts/getGithubRelease.sh"]
 
   query = {
     repo = var.github_repo_name,
@@ -16,7 +16,7 @@ resource "random_pet" "archive_directory" {
 }
 
 data "external" "unzipArchive" {
-  program = ["sh", "${path.module}/scripts/unzipArchive.sh"]
+  program = ["sh", "./${path.module}/scripts/unzipArchive.sh"]
 
   query = {
     archive = "${data.external.getGithubRelease.result.file}",
