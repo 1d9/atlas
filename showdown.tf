@@ -3,7 +3,7 @@ data "external" "getShowdownGithubRelease" {
 
   query = {
     repo = "1d9/showdown",
-    release = "v2.0.3"
+    release = "v2.0.4"
     file = "dist.zip"
   }
 }
