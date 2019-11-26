@@ -1,30 +1,5 @@
-data "external" "getShowdownGithubRelease" {
-  program = ["sh", "./scripts/getGithubRelease.sh"]
-
-  query = {
-    repo = "1d9/showdown",
-    release = "v2.0.4"
-    file = "dist.zip"
-  }
-}
-
-data "external" "unzipShowdownArchive" {
-  program = ["sh", "./scripts/unzipArchive.sh"]
-
-  query = {
-    archive = "${data.external.getShowdownGithubRelease.result.file}",
-    destination = "showdown",
-  }
-}
-
-locals {
-  showdownDestination = data.external.unzipShowdownArchive.result.destination
-  showdownFiles = fileset(local.showdownDestination, "**/*.{png,html,js,otf,css}")
-  showdownDomain = "showdown.1d9.tech"
-}
-
 resource "aws_s3_bucket" "showdown" {
-  bucket = local.showdownDomain
+  bucket = "showdown.1d9.tech"
   acl    = "public-read"
 
   website {
@@ -32,17 +7,13 @@ resource "aws_s3_bucket" "showdown" {
   }
 }
 
-resource "aws_s3_bucket_object" "showdown_site_files" {
-  for_each = local.showdownFiles
+module "showdown-s3" {
+  source = "./github-release-to-s3"
 
-  acl = "public-read"
-  bucket = aws_s3_bucket.showdown.bucket
-  key    = each.value
-
-  source = "${local.showdownDestination}/${each.value}"
-  etag =    filemd5("${local.showdownDestination}/${each.value}")
-
-  content_type = local.content-types[element(split(".", each.value), length(split(".", each.value)) - 1)]
+  github_repo_name = "1d9/showdown"
+  github_repo_release = "v2.0.4"
+  github_repo_release_filename = "dist.zip"
+  bucket_name = "showdown.1d9.tech"
 }
 
 resource "aws_route53_record" "showdown-record" {
