@@ -11,7 +11,7 @@ module "showdown-s3" {
   source = "./github-release-to-s3"
 
   github_repo_name = "1d9/showdown"
-  github_repo_release = "v3.0.1"
+  github_repo_release = "v3.0.2"
   github_repo_release_filename = "dist.zip"
   bucket_name = "showdown.1d9.tech"
 }
