@@ -1,4 +1,4 @@
-data "external" "getGithubRelease" {
+data "external" "getShowdownGithubRelease" {
   program = ["sh", "./scripts/getGithubRelease.sh"]
 
   query = {
@@ -12,7 +12,7 @@ data "external" "unzipArchive" {
   program = ["sh", "./scripts/unzipArchive.sh"]
 
   query = {
-    archive = "${data.external.getGithubRelease.result.file}",
+    archive = "${data.external.getShowdownGithubRelease.result.file}",
     destination = "showdown",
   }
 }
