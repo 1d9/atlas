@@ -20,7 +20,7 @@ data "external" "unzipShowdownArchive" {
 locals {
   showdownDestination = data.external.unzipShowdownArchive.result.destination
   showdownFiles = fileset(local.showdownDestination, "**/*.{png,html,js,otf,css}")
-  showdownDomain = "showdown.tome.1d9.tech"
+  showdownDomain = "showdown.1d9.tech"
 }
 
 resource "aws_s3_bucket" "showdown" {
@@ -47,7 +47,7 @@ resource "aws_s3_bucket_object" "showdown_site_files" {
 
 resource "aws_route53_record" "showdown-record" {
   zone_id = "${data.aws_route53_zone.primary-1d9-zone.zone_id}"
-  name    = local.showdownDestination
+  name    = "showdown"
   type    = "CNAME"
   ttl     = "300"
   records = [aws_s3_bucket.showdown.website_endpoint]
