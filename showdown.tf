@@ -18,21 +18,13 @@ data "external" "unzipShowdownArchive" {
 }
 
 locals {
-  content-types = {
-    png = "image/png",
-    html = "text/html",
-    js = "text/javascript",
-    otf = "font/otf",
-    css = "text/css"
-  }
-  destination = data.external.unzipArchive.result.destination
-  files = fileset(local.destination, "**/*.{png,html,js,otf,css}")
-  domain = "showdown.tome.1d9.tech"
+  showdownDestination = data.external.unzipShowdownArchive.result.destination
+  showdownFiles = fileset(local.unzipShowdownArchive, "**/*.{png,html,js,otf,css}")
+  showdownDomain = "showdown.tome.1d9.tech"
 }
 
-
 resource "aws_s3_bucket" "showdown" {
-  bucket = local.domain
+  bucket = local.showdownDomain
   acl    = "public-read"
 
   website {
@@ -41,22 +33,22 @@ resource "aws_s3_bucket" "showdown" {
 }
 
 resource "aws_s3_bucket_object" "showdown_site_files" {
-  for_each = local.files
+  for_each = local.showdownFiles
 
   acl = "public-read"
   bucket = aws_s3_bucket.showdown.bucket
   key    = each.value
 
-  source = "${local.destination}/${each.value}"
-  etag =    filemd5("${local.destination}/${each.value}")
+  source = "${local.showdownDestination}/${each.value}"
+  etag =    filemd5("${local.showdownDestination}/${each.value}")
 
   content_type = local.content-types[element(split(".", each.value), length(split(".", each.value)) - 1)]
 }
 
 resource "aws_route53_record" "showdown-record" {
   zone_id = "${data.aws_route53_zone.primary-1d9-zone.zone_id}"
-  name    = local.destination
+  name    = local.showdownDestination
   type    = "CNAME"
   ttl     = "300"
-  records = [aws_s3_bucket.expedition.website_endpoint]
+  records = [aws_s3_bucket.showdown.website_endpoint]
 }
