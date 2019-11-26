@@ -19,7 +19,7 @@ data "external" "unzipShowdownArchive" {
 
 locals {
   showdownDestination = data.external.unzipShowdownArchive.result.destination
-  showdownFiles = fileset(local.unzipShowdownArchive, "**/*.{png,html,js,otf,css}")
+  showdownFiles = fileset(local.showdownDestination, "**/*.{png,html,js,otf,css}")
   showdownDomain = "showdown.tome.1d9.tech"
 }
 
