@@ -1,5 +1,5 @@
 data "external" "getGithubRelease" {
-  program = ["sh", "./${path.module}/scripts/getGithubRelease.sh"]
+  program = ["sh", "${path.module}/scripts/getGithubRelease.sh"]
 
   query = {
     repo = var.github_repo_name,
@@ -8,19 +8,12 @@ data "external" "getGithubRelease" {
   }
 }
 
-# Get a unique name for the archive, that isn't the bucket name since that isn't safe for filenames
-resource "random_pet" "archive_directory" {
-  keepers = {
-    directory_name = "${var.bucket_name}"
-  }
-}
-
 data "external" "unzipArchive" {
-  program = ["sh", "./${path.module}/scripts/unzipArchive.sh"]
+  program = ["sh", "${path.module}/scripts/unzipArchive.sh"]
 
   query = {
     archive = "${data.external.getGithubRelease.result.file}",
-    destination = "${random_pet.archive_directory.keepers.directory_name}",
+    destination = "${var.bucket_name}",
   }
 }
 
