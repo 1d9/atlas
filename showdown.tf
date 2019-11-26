@@ -8,7 +8,7 @@ data "external" "getShowdownGithubRelease" {
   }
 }
 
-data "external" "unzipArchive" {
+data "external" "unzipShowdownArchive" {
   program = ["sh", "./scripts/unzipArchive.sh"]
 
   query = {
