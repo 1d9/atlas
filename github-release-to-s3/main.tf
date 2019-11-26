@@ -32,7 +32,7 @@ locals {
     otf = "font/otf",
     css = "text/css"
   }
-  destination = data.external.unzipShowdownArchive.result.destination
+  destination = data.external.unzipArchive.result.destination
   files = fileset(local.destination, "**/*.{png,html,js,otf,css}")
 }
 
